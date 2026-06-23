@@ -1,0 +1,38 @@
+{
+  "name": "chemical-modeling-prep",
+  "version": "0.1.0",
+  "description": "Prepare chemical process targets before time-series, soft-sensor, or LLM-assisted modeling.",
+  "author": {
+    "name": "Yifang Yang",
+    "email": "yang-1217@outlook.com",
+    "url": "https://github.com/axin1212"
+  },
+  "homepage": "https://github.com/axin1212/chemical-modeling-prep",
+  "repository": "https://github.com/axin1212/chemical-modeling-prep",
+  "keywords": [
+    "chemical-process",
+    "material-balance",
+    "soft-sensor",
+    "time-series",
+    "target-preparation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Chemical Modeling Prep",
+    "shortDescription": "Prepare chemical targets before modeling.",
+    "longDescription": "A structured workflow for chemical process modeling preparation: inspect data, infer tag roles and units, clarify targets, build process boundaries, draft material-balance formulas, and grade whether a target is physically computable before modeling.",
+    "developerName": "Yifang Yang",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/axin1212/chemical-modeling-prep",
+    "defaultPrompt": [
+      "Audit this chemical target before modeling.",
+      "Inspect these process data files and draft a confirmation list.",
+      "Build a material-balance formula and computability grade."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

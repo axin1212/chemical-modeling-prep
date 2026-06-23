@@ -1,6 +1,6 @@
 # Chemical Modeling Prep
 
-`chemical-modeling-prep` is a Codex skill for preparing chemical process targets before time-series modeling, soft-sensor modeling, or LLM-assisted process analysis.
+`chemical-modeling-prep` is a Codex plugin that provides a skill for preparing chemical process targets before time-series modeling, soft-sensor modeling, or LLM-assisted process analysis.
 
 The core idea is simple: do not start with model fitting. First make the chemical target physically calculable.
 
@@ -129,12 +129,66 @@ The final formula is graded:
 | C | approximation or proxy |
 | D | not computable from current data |
 
+## Plugin Usage
+
+This repository is structured as a Codex plugin. The plugin manifest is:
+
+```text
+.codex-plugin/plugin.json
+```
+
+The included skill is:
+
+```text
+skills/chemical-modeling-prep/SKILL.md
+```
+
+In Codex, invoke it as:
+
+```text
+$chemical-modeling-prep
+```
+
+Example prompt:
+
+```text
+Use $chemical-modeling-prep to inspect these process data files, clarify the target formula, and prepare a confirmation list before modeling.
+```
+
+## Local Update Behavior
+
+Local edits are not automatically reflected in an already installed Codex plugin.
+
+There are three separate states:
+
+- The local repository files.
+- The GitHub repository after `git push`.
+- The plugin version currently cached by Codex.
+
+If you update this repository locally:
+
+1. Commit the change.
+2. Push it to GitHub if you want the remote repo updated.
+3. If Codex has the plugin installed, update the plugin cachebuster and reinstall it.
+4. Start a new Codex thread to load the updated plugin.
+
+For local plugin development, use the plugin creator helper:
+
+```bash
+python3 /Users/yangyifang/.codex/skills/.system/plugin-creator/scripts/update_plugin_cachebuster.py \
+  /Users/yangyifang/supcon/playground/data/20260615_BASF/chemical-modeling-prep
+```
+
+Then reinstall the plugin from the marketplace that points to your local plugin source, and open a new thread. This cachebuster step exists because Codex intentionally caches installed plugins by version.
+
+If you installed the plugin from GitHub, local edits do not reach that installation until you commit, push, and reinstall or update the plugin from the remote source.
+
 ## Data Inspection Script
 
 The repository includes a helper script:
 
 ```bash
-python scripts/inspect_process_data.py \
+python skills/chemical-modeling-prep/scripts/inspect_process_data.py \
   --input /path/to/process_data.csv \
   --output-dir /path/to/output_dir
 ```
@@ -149,7 +203,7 @@ Outputs:
 Example:
 
 ```bash
-python scripts/inspect_process_data.py \
+python skills/chemical-modeling-prep/scripts/inspect_process_data.py \
   --input ./aligned_csv/R4000_series_aligned.csv \
   --output-dir ./chemical_modeling_prep_outputs
 ```
@@ -160,26 +214,31 @@ The script is intentionally conservative. It generates hypotheses, not final tru
 
 ```text
 .
-├── SKILL.md
-├── agents/
-│   └── openai.yaml
-├── references/
-│   ├── formula-patterns.md
-│   ├── output-template.md
-│   ├── risk-grading.md
-│   ├── unit-inference.md
-│   └── workflow.md
-└── scripts/
-    └── inspect_process_data.py
+├── .codex-plugin/
+│   └── plugin.json
+├── README.md
+└── skills/
+    └── chemical-modeling-prep/
+        ├── SKILL.md
+        ├── agents/
+        │   └── openai.yaml
+        ├── references/
+        │   ├── formula-patterns.md
+        │   ├── output-template.md
+        │   ├── risk-grading.md
+        │   ├── unit-inference.md
+        │   └── workflow.md
+        └── scripts/
+            └── inspect_process_data.py
 ```
 
 ## Key References
 
-- `references/workflow.md`: full staged workflow.
-- `references/output-template.md`: standard report layout.
-- `references/unit-inference.md`: rules for unit and basis inference.
-- `references/formula-patterns.md`: material-balance and target formulas.
-- `references/risk-grading.md`: confirmation priority and computability grading.
+- `skills/chemical-modeling-prep/references/workflow.md`: full staged workflow.
+- `skills/chemical-modeling-prep/references/output-template.md`: standard report layout.
+- `skills/chemical-modeling-prep/references/unit-inference.md`: rules for unit and basis inference.
+- `skills/chemical-modeling-prep/references/formula-patterns.md`: material-balance and target formulas.
+- `skills/chemical-modeling-prep/references/risk-grading.md`: confirmation priority and computability grading.
 
 ## Design Principles
 
