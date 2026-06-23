@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chemical Modeling Prep"
+  short_description: "Prepare chemical targets before modeling"
+  default_prompt: "Use $chemical-modeling-prep to inspect process data, clarify target formulas, and prepare a chemical modeling prep pack."
